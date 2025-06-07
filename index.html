@@ -3,254 +3,536 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex Chen - Product Manager Portfolio</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Samarth - Product Manager Portfolio</title>
     <style>
-        body { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .role-selector {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .role-selector h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #2d3748;
+        }
+        
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .role-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .role-card.designer {
+            border-color: #e91e63;
+        }
+        
+        .role-card.engineer {
+            border-color: #2196f3;
+        }
+        
+        .role-card.business {
+            border-color: #4caf50;
+        }
+        
+        .role-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .designer .role-icon {
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+        }
+        
+        .engineer .role-icon {
+            background: linear-gradient(135deg, #2196f3, #00bcd4);
+        }
+        
+        .business .role-icon {
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+        }
+        
+        .role-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+        
+        .role-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .cta {
+            color: #667eea;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .content-section {
+            display: none;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .back-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #5a67d8;
+        }
+        
+        .case-study {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .case-study h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        
+        .case-study h3 {
+            color: #4a5568;
+            margin: 30px 0 15px 0;
+            font-size: 1.3rem;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .metric-card {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: #4caf50;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 10px;
+        }
+        
+        .persona-card {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: #2d3748;
+        }
+        
+        .tech-stack {
+            background: linear-gradient(135deg, #a8e6cf, #88d8a3);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .business-impact {
+            background: linear-gradient(135deg, #c7ecee, #a8e6cf);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .roles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .role-card {
+                padding: 30px 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
-    
-    <script type="text/babel">
-        const { useState } = React;
-        const { User, Code, TrendingUp, ArrowRight, MapPin, Clock, Star, Users, Database, Zap, DollarSign, Target, Smartphone } = lucideReact;
+    <div class="hero">
+        <div class="container">
+            <h1>Hi! I'm <span style="color: #ffd700;">Samarth</span></h1>
+            <p>Product Manager specializing in user-centric product development</p>
+        </div>
+    </div>
 
-        const InteractivePortfolio = () => {
-            const [selectedRole, setSelectedRole] = useState('');
-            const [currentSection, setCurrentSection] = useState('overview');
+    <div id="role-selector" class="role-selector">
+        <div class="container">
+            <h2>I'd like to see how you work with...</h2>
+            <div class="roles-grid">
+                <div class="role-card designer" onclick="showContent('designer')">
+                    <div class="role-icon">🎨</div>
+                    <h3>Designers</h3>
+                    <p>See how I collaborate with design teams</p>
+                    <div class="cta">Explore →</div>
+                </div>
+                
+                <div class="role-card engineer" onclick="showContent('engineer')">
+                    <div class="role-icon">💻</div>
+                    <h3>Engineers</h3>
+                    <p>Explore technical requirements and architecture</p>
+                    <div class="cta">Explore →</div>
+                </div>
+                
+                <div class="role-card business" onclick="showContent('business')">
+                    <div class="role-icon">📊</div>
+                    <h3>Business Leaders</h3>
+                    <p>View business impact and strategic decisions</p>
+                    <div class="cta">Explore →</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 50px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                <strong>🚀 Featured Case Study:</strong> Zomato Food Ordering Optimization
+            </div>
+        </div>
+    </div>
 
-            const roles = {
-                designer: {
-                    icon: React.createElement(User, { className: "w-8 h-8" }),
-                    title: "Designers",
-                    description: "See how I collaborate with design teams",
-                    color: "from-pink-500 to-purple-600",
-                    bgColor: "bg-pink-50",
-                    sections: ['overview', 'user-research', 'journey-mapping', 'collaboration']
-                },
-                engineer: {
-                    icon: React.createElement(Code, { className: "w-8 h-8" }),
-                    title: "Engineers", 
-                    description: "Explore technical requirements and architecture",
-                    color: "from-blue-500 to-cyan-600",
-                    bgColor: "bg-blue-50",
-                    sections: ['overview', 'technical-architecture', 'api-design', 'performance']
-                },
-                business: {
-                    icon: React.createElement(TrendingUp, { className: "w-8 h-8" }),
-                    title: "Business Leaders",
-                    description: "View business impact and strategic decisions", 
-                    color: "from-green-500 to-emerald-600",
-                    bgColor: "bg-green-50",
-                    sections: ['overview', 'business-impact', 'metrics', 'strategy']
-                }
-            };
+    <!-- Designer Content -->
+    <div id="designer-content" class="content-section">
+        <div class="container">
+            <button class="back-btn" onclick="showRoleSelector()">← Back to roles</button>
+            <div class="case-study">
+                <h2>🎨 For Designers: Zomato UX Optimization</h2>
+                
+                <div class="persona-card">
+                    <h3>👤 Primary Persona: Busy Professional Priya</h3>
+                    <ul class="feature-list">
+                        <li><strong>Age:</strong> 28, Marketing Manager in Bangalore</li>
+                        <li><strong>Behavior:</strong> Orders food 4-5x/week, values speed & convenience</li>
+                        <li><strong>Pain Points:</strong> Long delivery times, unpredictable food quality</li>
+                        <li><strong>Goals:</strong> Quick, reliable food delivery under ₹400 per meal</li>
+                    </ul>
+                </div>
 
-            const resetView = () => {
-                setSelectedRole('');
-                setCurrentSection('overview');
-            };
+                <h3>🔍 Research Methods Used</h3>
+                <ul class="feature-list">
+                    <li>15 user interviews with existing Zomato customers</li>
+                    <li>App usage analytics review (3 months of data)</li>
+                    <li>Competitor journey mapping (Swiggy, UberEats)</li>
+                    <li>Customer support ticket analysis (500+ tickets)</li>
+                    <li>User testing sessions with 20+ participants</li>
+                </ul>
 
-            const RoleSelector = () => (
-                React.createElement('div', { className: "min-h-screen bg-gradient-to-br from-gray-50 to-white flex items-center justify-center p-8" },
-                    React.createElement('div', { className: "max-w-6xl mx-auto text-center" },
-                        React.createElement('div', { className: "mb-8" },
-                            React.createElement('h1', { className: "text-5xl font-bold text-gray-900 mb-4" },
-                                "Hi! I'm ",
-                                React.createElement('span', { className: "text-blue-600" }, "Alex Chen")
-                            ),
-                            React.createElement('p', { className: "text-xl text-gray-600 mb-2" }, "Product Manager"),
-                            React.createElement('p', { className: "text-lg text-gray-500" }, "Specializing in user-centric product development")
-                        ),
-                        React.createElement('div', { className: "mb-12" },
-                            React.createElement('h2', { className: "text-2xl font-semibold text-gray-800 mb-8" },
-                                "I'd like to see how you work with..."
-                            ),
-                            React.createElement('div', { className: "grid md:grid-cols-3 gap-8 max-w-4xl mx-auto" },
-                                Object.entries(roles).map(([key, role]) => (
-                                    React.createElement('div', {
-                                        key: key,
-                                        onClick: () => setSelectedRole(key),
-                                        className: "group cursor-pointer transform hover:scale-105 transition-all duration-300"
-                                    },
-                                        React.createElement('div', { className: `${role.bgColor} rounded-2xl p-8 shadow-lg hover:shadow-xl border border-gray-100` },
-                                            React.createElement('div', { className: `w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-r ${role.color} flex items-center justify-center text-white` },
-                                                role.icon
-                                            ),
-                                            React.createElement('h3', { className: "text-xl font-semibold text-gray-800 mb-3" }, role.title),
-                                            React.createElement('p', { className: "text-gray-600 mb-4" }, role.description),
-                                            React.createElement('div', { className: "flex items-center justify-center text-blue-600 font-medium" },
-                                                "Explore ",
-                                                React.createElement(ArrowRight, { className: "w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" })
-                                            )
-                                        )
-                                    )
-                                ))
-                            )
-                        ),
-                        React.createElement('div', { className: "text-center" },
-                            React.createElement('div', { className: "inline-flex items-center px-6 py-3 bg-gray-100 rounded-full text-gray-600" },
-                                React.createElement(Smartphone, { className: "w-5 h-5 mr-2" }),
-                                "Featured Case Study: Zomato Food Ordering Optimization"
-                            )
-                        )
-                    )
-                )
-            );
+                <h3>📈 Key Design Improvements & Results</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">40%</div>
+                        <div class="metric-label">Reduction in cart abandonment</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">23%</div>
+                        <div class="metric-label">Increase in conversion rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">35%</div>
+                        <div class="metric-label">Faster order completion</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">4.6/5</div>
+                        <div class="metric-label">User satisfaction score</div>
+                    </div>
+                </div>
 
-            const Navigation = () => {
-                const role = roles[selectedRole];
-                return (
-                    React.createElement('div', { className: "bg-white shadow-sm border-b sticky top-0 z-10" },
-                        React.createElement('div', { className: "max-w-6xl mx-auto px-6 py-4" },
-                            React.createElement('div', { className: "flex items-center justify-between" },
-                                React.createElement('div', { className: "flex items-center space-x-4" },
-                                    React.createElement('button', { onClick: resetView, className: "text-gray-500 hover:text-gray-700" },
-                                        "← Back to roles"
-                                    ),
-                                    React.createElement('div', { className: "flex items-center space-x-3" },
-                                        React.createElement('div', { className: `w-8 h-8 rounded-full bg-gradient-to-r ${role.color} flex items-center justify-center text-white text-sm` },
-                                            role.icon
-                                        ),
-                                        React.createElement('span', { className: "font-semibold text-gray-800" }, `For ${role.title}`)
-                                    )
-                                ),
-                                React.createElement('div', { className: "text-sm text-gray-500" }, "Zomato Case Study")
-                            ),
-                            React.createElement('div', { className: "flex space-x-1 mt-4" },
-                                role.sections.map((section) => (
-                                    React.createElement('button', {
-                                        key: section,
-                                        onClick: () => setCurrentSection(section),
-                                        className: `px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                                            currentSection === section 
-                                                ? 'bg-blue-100 text-blue-700' 
-                                                : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
-                                        }`
-                                    },
-                                        section.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-                                    )
-                                ))
-                            )
-                        )
-                    )
-                );
-            };
+                <h3>🤝 Design Collaboration Process</h3>
+                <p>Facilitated weekly design reviews with UX team to prioritize user pain points and validate design solutions through rapid prototyping. Led cross-functional workshops to align on user journey improvements, resulting in streamlined checkout flow that reduced user friction by 35%.</p>
+                
+                <h3>🎯 Key UX Improvements Made</h3>
+                <ul class="feature-list">
+                    <li>Simplified restaurant discovery with AI-powered recommendations</li>
+                    <li>Transparent pricing display to reduce checkout surprises</li>
+                    <li>One-click reorder functionality for frequent users</li>
+                    <li>Real-time delivery tracking with proactive updates</li>
+                    <li>Smart address detection to speed up checkout</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-            const DesignerContent = () => {
-                switch(currentSection) {
-                    case 'user-research':
-                        return (
-                            React.createElement('div', { className: "space-y-8" },
-                                React.createElement('h2', { className: "text-3xl font-bold text-gray-900" }, "User Research & Personas"),
-                                React.createElement('div', { className: "grid md:grid-cols-2 gap-8" },
-                                    React.createElement('div', { className: "bg-pink-50 rounded-lg p-6" },
-                                        React.createElement('h3', { className: "text-xl font-semibold mb-4 text-pink-800" }, "Primary Persona: Busy Professional Priya"),
-                                        React.createElement('div', { className: "space-y-3 text-gray-700" },
-                                            React.createElement('p', null, React.createElement('strong', null, "Age:"), " 28, Marketing Manager"),
-                                            React.createElement('p', null, React.createElement('strong', null, "Behavior:"), " Orders 4-5x/week, values speed & convenience"),
-                                            React.createElement('p', null, React.createElement('strong', null, "Pain Points:"), " Long delivery times, unpredictable quality"),
-                                            React.createElement('p', null, React.createElement('strong', null, "Goals:"), " Quick, reliable food delivery under ₹400")
-                                        )
-                                    ),
-                                    React.createElement('div', { className: "bg-purple-50 rounded-lg p-6" },
-                                        React.createElement('h3', { className: "text-xl font-semibold mb-4 text-purple-800" }, "Research Methods Used"),
-                                        React.createElement('ul', { className: "space-y-2 text-gray-700" },
-                                            React.createElement('li', null, "• 15 user interviews with existing customers"),
-                                            React.createElement('li', null, "• App usage analytics review (3 months)"),
-                                            React.createElement('li', null, "• Competitor journey mapping"),
-                                            React.createElement('li', null, "• Customer support ticket analysis")
-                                        )
-                                    )
-                                )
-                            )
-                        );
-                    
-                    case 'journey-mapping':
-                        return (
-                            React.createElement('div', { className: "space-y-8" },
-                                React.createElement('h2', { className: "text-3xl font-bold text-gray-900" }, "Customer Journey Mapping Process"),
-                                React.createElement('div', { className: "bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-8" },
-                                    React.createElement('h3', { className: "text-xl font-semibold mb-6" }, "Zomato Food Ordering Journey"),
-                                    React.createElement('div', { className: "grid grid-cols-4 gap-6" },
-                                        [
-                                            { stage: 'Discovery', emotion: '😋', action: 'Sees ad, opens app', pain: 'Too many options' },
-                                            { stage: 'Browse', emotion: '🤔', action: 'Filters restaurants', pain: 'Unclear delivery fees' },
-                                            { stage: 'Order', emotion: '😰', action: 'Add to cart, checkout', pain: 'Hidden charges' },
-                                            { stage: 'Delivery', emotion: '😊', action: 'Track order, receive food', pain: 'Delayed updates' }
-                                        ].map((step, idx) => (
-                                            React.createElement('div', { key: idx, className: "bg-white rounded-lg p-4 text-center" },
-                                                React.createElement('div', { className: "text-2xl mb-2" }, step.emotion),
-                                                React.createElement('h4', { className: "font-semibold mb-2" }, step.stage),
-                                                React.createElement('p', { className: "text-sm text-gray-600 mb-2" }, step.action),
-                                                React.createElement('p', { className: "text-xs text-red-600" }, `Pain: ${step.pain}`)
-                                            )
-                                        ))
-                                    )
-                                )
-                            )
-                        );
-                    
-                    default:
-                        return (
-                            React.createElement('div', { className: "space-y-8" },
-                                React.createElement('h2', { className: "text-3xl font-bold text-gray-900" }, "Zomato Food Ordering Optimization"),
-                                React.createElement('div', { className: "bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-8" },
-                                    React.createElement('h3', { className: "text-2xl font-semibold mb-4" }, "Design-Focused Overview"),
-                                    React.createElement('p', { className: "text-lg text-gray-700 mb-6" },
-                                        "Led cross-functional initiative to reduce 40% cart abandonment through user-centered design improvements."
-                                    ),
-                                    React.createElement('div', { className: "grid md:grid-cols-3 gap-6" },
-                                        [
-                                            { icon: Users, title: "User Research", desc: "15 interviews, journey mapping, persona development", color: "text-pink-600" },
-                                            { icon: Target, title: "Design Process", desc: "Collaborative wireframing, rapid prototyping, user testing", color: "text-purple-600" },
-                                            { icon: Star, title: "Impact", desc: "23% increase in conversion, improved user satisfaction", color: "text-pink-600" }
-                                        ].map((item, idx) => (
-                                            React.createElement('div', { key: idx, className: "bg-white rounded-lg p-4" },
-                                                React.createElement(item.icon, { className: `w-8 h-8 ${item.color} mb-3` }),
-                                                React.createElement('h4', { className: "font-semibold mb-2" }, item.title),
-                                                React.createElement('p', { className: "text-sm text-gray-600" }, item.desc)
-                                            )
-                                        ))
-                                    )
-                                )
-                            )
-                        );
-                }
-            };
+    <!-- Engineer Content -->
+    <div id="engineer-content" class="content-section">
+        <div class="container">
+            <button class="back-btn" onclick="showRoleSelector()">← Back to roles</button>
+            <div class="case-study">
+                <h2>💻 For Engineers: Zomato Technical Architecture</h2>
+                
+                <div class="tech-stack">
+                    <h3>🏗️ System Architecture & Tech Stack</h3>
+                    <ul class="feature-list">
+                        <li><strong>Frontend:</strong> React Native for mobile apps (iOS/Android)</li>
+                        <li><strong>Backend:</strong> Node.js + Express.js API Gateway</li>
+                        <li><strong>Database:</strong> PostgreSQL (primary) + Redis (caching)</li>
+                        <li><strong>Infrastructure:</strong> AWS (EC2, RDS, ElastiCache)</li>
+                        <li><strong>Real-time:</strong> WebSocket connections for order tracking</li>
+                    </ul>
+                </div>
 
-            const renderContent = () => {
-                switch(selectedRole) {
-                    case 'designer':
-                        return React.createElement(DesignerContent);
-                    default:
-                        return React.createElement('div', { className: "text-center py-20" },
-                            React.createElement('h2', { className: "text-2xl font-bold text-gray-900 mb-4" }, "More content coming soon!"),
-                            React.createElement('p', { className: "text-gray-600" }, "This section is being developed. Please check back later.")
-                        );
-                }
-            };
+                <h3>⚡ Technical Requirements I Defined</h3>
+                <ul class="feature-list">
+                    <li>Sub-2 second restaurant search response time</li>
+                    <li>Support for 10,000+ concurrent users during peak hours</li>
+                    <li>99.9% uptime with automated failover mechanisms</li>
+                    <li>Real-time order tracking with <200ms latency</li>
+                    <li>Offline capability for viewing order history</li>
+                    <li>Auto-scaling based on traffic patterns</li>
+                </ul>
 
-            if (!selectedRole) {
-                return React.createElement(RoleSelector);
-            }
+                <h3>🔌 API Integration & Architecture</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">15+</div>
+                        <div class="metric-label">Third-party API integrations</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">&lt;500ms</div>
+                        <div class="metric-label">Average API response time</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">99.9%</div>
+                        <div class="metric-label">API reliability</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">50+</div>
+                        <div class="metric-label">Custom API endpoints</div>
+                    </div>
+                </div>
 
-            return (
-                React.createElement('div', { className: "min-h-screen bg-gray-50" },
-                    React.createElement(Navigation),
-                    React.createElement('div', { className: "max-w-6xl mx-auto px-6 py-12" },
-                        renderContent()
-                    )
-                )
-            );
-        };
+                <h3>🛠️ Key Technical Decisions & Trade-offs</h3>
+                <ul class="feature-list">
+                    <li><strong>Redis Caching:</strong> Chose over complex DB queries for 80% faster response times</li>
+                    <li><strong>Microservices:</strong> Separated order, payment, and notification services for scalability</li>
+                    <li><strong>CDN Implementation:</strong> Reduced image load times by 60% globally</li>
+                    <li><strong>Database Optimization:</strong> Implemented read replicas and connection pooling</li>
+                    <li><strong>Mobile-First API:</strong> Designed lightweight endpoints for mobile performance</li>
+                </ul>
 
-        ReactDOM.render(React.createElement(InteractivePortfolio), document.getElementById('root'));
+                <h3>📊 Performance Monitoring & Metrics</h3>
+                <p>Implemented comprehensive monitoring with New Relic and custom dashboards. Set up automated alerts for performance degradation and established SLA targets that improved overall system reliability by 40%.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Business Content -->
+    <div id="business-content" class="content-section">
+        <div class="container">
+            <button class="back-btn" onclick="showRoleSelector()">← Back to roles</button>
+            <div class="case-study">
+                <h2>📊 For Business Leaders: Zomato ROI & Strategy</h2>
+                
+                <div class="business-impact">
+                    <h3>💰 Business Impact & ROI</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">₹2.3M</div>
+                            <div class="metric-label">Additional monthly revenue</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">320%</div>
+                            <div class="metric-label">ROI within 6 months</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">1.2M</div>
+                            <div class="metric-label">Monthly active users</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">₹387</div>
+                            <div class="metric-label">Average order value (+12%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>📈 Key Performance Indicators</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">68%</div>
+                        <div class="metric-label">Repeat order rate (+15%)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">3.2 min</div>
+                        <div class="metric-label">Time to first order (-45%)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">4.6/5</div>
+                        <div class="metric-label">Customer satisfaction (+0.4)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">0.1%</div>
+                        <div class="metric-label">App crash rate (-70%)</div>
+                    </div>
+                </div>
+
+                <h3>🎯 Strategic Decisions & Market Impact</h3>
+                <ul class="feature-list">
+                    <li><strong>Market Opportunity:</strong> Identified 40% cart abandonment as critical revenue leak worth ₹15M annually</li>
+                    <li><strong>Competitive Advantage:</strong> Achieved 15% better conversion than industry average (Swiggy: 12%, Zomato: 27%)</li>
+                    <li><strong>Investment Prioritization:</strong> Mobile optimization over web (85% traffic) showed 3.2x ROI</li>
+                    <li><strong>Phased Rollout:</strong> Tier-1 cities first, reducing risk while maximizing learnings</li>
+                    <li><strong>Resource Allocation:</strong> 60% engineering, 25% design, 15% marketing for optimal impact</li>
+                </ul>
+
+                <h3>🚀 Go-to-Market Strategy</h3>
+                <p><strong>Phase 1:</strong> Launched in Mumbai & Delhi with A/B testing (2 weeks)</p>
+                <p><strong>Phase 2:</strong> Expanded to 6 tier-1 cities after 23% conversion improvement (1 month)</p>
+                <p><strong>Phase 3:</strong> National rollout after confirming consistent results (2 months)</p>
+                
+                <h3>📊 Business Case & Projections</h3>
+                <p>Initial investment of ₹50L returned ₹1.6Cr in first 6 months. Projected annual impact: ₹28Cr additional revenue from improved user experience and reduced churn. Market share in food delivery increased from 52% to 55% in target cities.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showContent(role) {
+            // Hide role selector
+            document.getElementById('role-selector').style.display = 'none';
+            
+            // Hide all content sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(role + '-content').classList.add('active');
+        }
+        
+        function showRoleSelector() {
+            // Show role selector
+            document.getElementById('role-selector').style.display = 'block';
+            
+            // Hide all content sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Smooth scroll to top
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('.role-card').forEach(card => {
+            card.addEventListener('click', () => {
+                setTimeout(() => {
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                }, 100);
+            });
+        });
     </script>
 </body>
-</html> 
+</html>
